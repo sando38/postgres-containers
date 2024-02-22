@@ -46,10 +46,13 @@ RUN set -xe; \
 		python3-pip \
 		python3-psycopg2 \
 		python3-setuptools \
+		# TODO: Remove extra build deps once https://github.com/intake/python-snappy/issues/124 is fixed
+		python3-dev gcc g++ libsnappy-dev \
 	; \
 	pip3 install --break-system-packages --upgrade pip; \
 # TODO: Remove --no-deps once https://github.com/pypa/pip/issues/9644 is solved
 	pip3 install --break-system-packages --no-deps -r requirements.txt; \
+	apt-get remove -y python3-dev gcc g++ libsnappy-dev; \
 	rm -rf /var/lib/apt/lists/*;
 
 # Change the uid of postgres to 26
